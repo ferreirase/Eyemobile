@@ -1,0 +1,296 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Eyemobile Teste - Transações de Cartão",
+    "description": "Documentação sobre como utilizar a API.",
+    "version": "1.0.0",
+    "contact": {
+      "email": "phaell.anderson09@gmail.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Operações sobre usuários"
+    },
+    {
+      "name": "Sessions",
+      "description": "Operações sobre sessões"
+    },
+    {
+      "name": "Transactions",
+      "description": "Operações sobre transações"
+    },
+    {
+      "name": "Balances",
+      "description": "Operações sobre balanços"
+    }
+  ],
+  "paths": {
+    "/sessions": {
+      "post": {
+        "tags": [
+          "Sessions"
+        ],
+        "summary": "Criar sessão",
+        "description": "Este endpoint tem como objetivo permitir realizar login na aplicação.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Sessions"
+              }
+            }
+          },
+          "description": "",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Sessions"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error: Unauthorized"
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Cadastrar usuário",
+        "description": "Este endpoint tem como objetivo permitir criar um novo usuário para a API.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Users"
+              }
+            }
+          },
+          "description": "",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Users"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error: Unauthorized"
+          }
+        }
+      }
+    },
+    "/transactions": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Listar todas as transações",
+        "description": "Este endpoint tem como objetivo permitir a listagem de todas as transações cadastradas.",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Error: Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Criar uma nova transação",
+        "description": "Este endpoint tem como objetivo permitir a criação de uma nova transação.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Create Transaction"
+              }
+            }
+          },
+          "description": "Campos a serem enviados:",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Error: Unauthorized"
+          }
+        }
+      }
+    },
+    "/balances": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Balances"
+        ],
+        "summary": "Listar balanço",
+        "description": "Este endpoint tem como objetivo permitir a listagem do balanço atual (valores disponíveis e a receber).",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "description": "Data para verificação de disponibilidade de saldo.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Date Balance"
+            }
+         }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Error: Unauthorized"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "Sessions": {
+        "type": "object",
+        "required": [
+          "username",
+          "password"
+        ],
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "ferreirase"
+          },
+          "password": {
+            "type": "string",
+            "example": "123456"
+          }
+        }
+      },
+      "Users": {
+        "type": "object",
+        "required": [
+          "username",
+          "password"
+        ],
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "terminal"
+          },
+          "password": {
+            "type": "string",
+            "example": "123456"
+          }
+        }
+      },
+      "Transactions": {
+        "type": "object",
+        "required": [
+          "username",
+          "password"
+        ],
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "terminal"
+          },
+          "password": {
+            "type": "string",
+            "example": "123456"
+          }
+        }
+      },
+      "Create Transaction": {
+        "type": "object",
+        "required": [
+          "usn",
+          "value",
+          "flag",
+          "mode",
+          "date"
+        ],
+        "properties": {
+          "usn": {
+            "type": "string",
+            "example": "0459356"
+          },
+          "value": {
+            "type": "real",
+            "example": "75.50"
+          },
+          "flag": {
+            "type": "string",
+            "example": "VISA"
+          },
+          "mode": {
+            "type": "string",
+            "example": "credit"
+          },
+          "date": {
+            "type": "string",
+            "example": "2020-10-13T19:00:00.00-03:00"
+          }
+        }
+      },
+      "Date Balance": {
+        "type": "string",
+        "properties": {
+          "date": {
+            "type": "string",
+            "example": "2020-10-13T19:00:00.00-03:00"
+          }
+        }
+      }
+    }
+  }
+}
