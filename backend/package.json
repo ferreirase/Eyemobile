@@ -36,7 +36,8 @@
   },
   "scripts": {
     "start": "babel-node ./src/server.js",
-    "dev": "nodemon ./src/server.js",
+    "dev:server": "nodemon ./src/server.js",
+    "dev:database": "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all",
     "doc": "nodemon ./src/swagger.js"
   }
 }
